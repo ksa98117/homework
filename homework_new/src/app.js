@@ -6,64 +6,18 @@ var HelloWorldLayer = cc.Layer.extend({
         this._super();
         var BC=new cc.Sprite("res/blue.jpg");
 
-        BC.scale=0.2;
+        BC.scale=0.5;
         this.addChild(BC);
         BC.x=this.width/2;
-
-        return true;
-//    }
-//});
-        var size = cc.winSize;
-
-        var closeItem = new cc.MenuItemImage(
-            res.CloseNormal_png,
-            res.CloseSelected_png,
-            function () {
-                cc.log("Menu is clicked!");
-            }, this);
-        closeItem.attr({
-            x: size.width - 20,
-            y: 20,
-            anchorX: 0.5,
-            anchorY: 0.5
-        });
-
-        var menu = new cc.Menu(closeItem);
-        menu.x = 0;
-        menu.y = 0;
-        this.addChild(menu, 1);
-
-
-        var helloLabel = new cc.LabelTTF("Hello World", "Arial", 38);
+        BC.y=this.height / 2;
        
-        helloLabel.x = size.width / 2;
-        helloLabel.y = 0;
-    
-        this.addChild(helloLabel, 5);
-
-   
-        this.sprite = new cc.Sprite(res.HelloWorld_png);
-        this.sprite.attr({
-            x: size.width / 2,
-            y: size.height / 2,
-            scale: 0.5,
-            rotation: 180
-        });
-        this.addChild(this.sprite, 0);
-
-        this.sprite.runAction(
-            cc.sequence(
-                cc.rotateTo(2, 0),
-                cc.scaleTo(2, 1, 1)
-            )
-        );
-        helloLabel.runAction(
-            cc.spawn(
-                cc.moveBy(2.5, cc.p(0, size.height - 40)),
-                cc.tintTo(2.5,255,125,0)
-            )
-        );
+       //
+        var helloLabel = cc.LabelTTF("Hello World");
+        helloLabel.x = this.width/2;
+        helloLabel.y = 100;
+        this.addChild(helloLabel);
         return true;
+//      
     }
 });
 
@@ -74,4 +28,3 @@ var HelloWorldScene = cc.Scene.extend({
         this.addChild(layer);
     }
 });
-
