@@ -1,28 +1,45 @@
 var HelloWorldLayer = cc.Layer.extend({
+
 	sprite:null,
 	shapes:[],
 	drawNode:null,
 	ctor:function () {
 
 		this._super();
-		var BC=new cc.Sprite("res/blue.jpg");
+		var BC=new cc.Sprite("res/back.jpg"); //배경
 
 		BC.scale=0.5;
 		this.addChild(BC);
 		BC.x=this.width/2;
 		BC.y=this.height / 2;
+//메뉴 위치
+		var colormenu=new  cc.MenuItemImage(
+				"res/black.jpg",
+				"res/black.jpg",
+				this.undo,this);
+		colormenu.attr({ 
+			x: 650,
+			y:  this.height-30, 
+			anchorX: 0.5,
+			anchorY: 0.5
+		});
 
-		//
-		var helloLabel = cc.LabelTTF("Hello World");
+		var menu1 = new cc.Menu(colormenu);
+		menu1.x = 0;
+		menu1.y = 0;
+		this.addChild(menu1, 1);
+//
+	
+		var helloLabel = cc.LabelTTF("Hello World"); 
 		helloLabel.x = this.width/2;
 		helloLabel.y = 100;
 		this.addChild(helloLabel);
 
-		var closeItem = new cc.MenuItemImage(
-				res.CloseNormal_png,
+		var closeItem = new cc.MenuItemImage( //버튼 삽입
+				res.CloseNormal_png, //보이는 것
 				res.CloseSelected_png,
-				this.undo, this);
-		closeItem.attr({
+				this.undo, this); // undo 수행
+		closeItem.attr({ //위치 지정
 			x: 100,
 			y: 20,
 			anchorX: 0.5,
@@ -33,8 +50,9 @@ var HelloWorldLayer = cc.Layer.extend({
 		menu.x = 0;
 		menu.y = 0;
 		this.addChild(menu, 1);
+	
 
-		this.drawNode = new cc.DrawNode();
+		this.drawNode = new cc.DrawNode(); //화면에 그림을 그리는 거
 		this.addChild(this.drawNode);
 
 		var listener = cc.EventListener.create({
@@ -53,22 +71,25 @@ var HelloWorldLayer = cc.Layer.extend({
 				event.getCurrentTarget().drawNode.drawSegment(p1,p2,2,cc.color(100,20,20));
 				return true;
 			}
+			//
+			
+			//
 		});
+				
 		cc.eventManager.addListener(listener, this);
-
-
 
 		return true;
 	},
 	undo: function(){
 		this.shapes.pop(); // 마지막 그린거 버린다
 		this.shapes.pop();
-		this.drawNode.clear();
+		this.drawNode.clear(); //노드와 쉐이프는 다른 공간
 		for(var i = 0; i<this.shapes.length;i+=2){
 			this.drawNode.drawSegment(this.shapes[i],this.shapes[i+1],2,cc.color(100,20,20));
 		}
 	}
 });
+	
 
 var HelloWorldScene = cc.Scene.extend({
 	onEnter:function () {
@@ -78,7 +99,5 @@ var HelloWorldScene = cc.Scene.extend({
 	}
 });
 
-/*
- stop 은 완전히 멈추는것 
- */
- 
+
+
